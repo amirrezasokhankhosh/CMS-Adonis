@@ -5,7 +5,7 @@ const Model = use('Model')
 
 class Comment extends Model {
 
-    user () {
+    user() {
         return this.belongsTo('App/Models/User')
     }
 }

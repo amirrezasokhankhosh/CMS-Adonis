@@ -4,7 +4,7 @@
 const Model = use('Model')
 
 class Category extends Model {
-    posts () {
+    posts() {
         return this.belongsToMany('App/Models/Post').pivotTable('post_categories')
     }
 }

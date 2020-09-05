@@ -4,15 +4,15 @@
 const Model = use('Model')
 
 class Post extends Model {
-    user () {
+    user() {
         return this.hasOne('App/Models/User')
     }
 
-    comments () {
+    comments() {
         return this.hasMany('App/Models/Comment')
     }
 
-    categories () {
+    categories() {
         return this.hasMany('App/Models/Category').pivotTable('post_categories')
     }
 }

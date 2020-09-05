@@ -4,7 +4,7 @@
 const Schema = use('Schema')
 
 class PostCategorySchema extends Schema {
-  up () {
+  up() {
     this.create('post_categories', (table) => {
       table.increments()
       table.integer('post_id').unsigned().references('id').inTable('posts')
@@ -13,7 +13,7 @@ class PostCategorySchema extends Schema {
     })
   }
 
-  down () {
+  down() {
     this.drop('post_categories')
   }
 }

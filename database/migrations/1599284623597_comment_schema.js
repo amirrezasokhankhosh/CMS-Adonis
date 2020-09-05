@@ -4,7 +4,7 @@
 const Schema = use('Schema')
 
 class CommentSchema extends Schema {
-  up () {
+  up() {
     this.create('comments', (table) => {
       table.increments()
       table.string('content').notNullable()
@@ -14,7 +14,7 @@ class CommentSchema extends Schema {
     })
   }
 
-  down () {
+  down() {
     this.drop('comments')
   }
 }

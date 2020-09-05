@@ -28,11 +28,11 @@ class UserController {
 
     async login({ request, auth, response }) {
         const { email, password } = request.all()
-        const token = await auth.attempt(email,password)
+        const token = await auth.attempt(email, password)
         return response.json(token)
     }
 
-    async check({auth , response}){
+    async check({ auth, response }) {
         try {
             await auth.check()
             response.send("This user is allowd!")
