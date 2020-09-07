@@ -16,7 +16,7 @@ class PostController {
                 content: "required"
             })
             if (!validation.fails()) {
-                const { content, categories} = request.all()
+                const { content, categories } = request.all()
                 var post = new Post
                 var user = await auth.getUser()
                 post.content = content
@@ -39,7 +39,7 @@ class PostController {
         }
     }
 
-    async update({params , request , response , auth}){
+    async update({ params, request, response, auth }) {
         try {
             await auth.check()
             const validation = await validate(request.all(), {
@@ -51,9 +51,9 @@ class PostController {
                 post.content = content
                 await post.save()
                 var i = 0
-                var lastPostCategories = await Post_Category.query().where('post_id' , params.post_id).fetch()
+                var lastPostCategories = await Post_Category.query().where('post_id', params.post_id).fetch()
                 lastPostCategories = lastPostCategories.toJSON()
-                while(lastPostCategories[i]){
+                while (lastPostCategories[i]) {
                     var post_Category = await Post_Category.find(lastPostCategories[i].id)
                     await post_Category.delete()
                     i = i + 1
@@ -75,42 +75,43 @@ class PostController {
         }
     }
 
-    async delete({params , response , auth}){
+    async delete({ params, response, auth }) {
         try {
             await auth.check()
-            var comments = await Comment.query().where('post_id' , params.post_id).fetch()
+            var comments = await Comment.query().where('post_id', params.post_id).fetch()
             comments = comments.toJSON()
             var i = 0
-            while(comments[i]){
+            while (comments[i]) {
                 var comment = await Comment.find(comments[i].id)
                 await comment.delete()
                 i = i + 1
             }
             i = 0
-            var PostCategories = await Post_Category.query().where('post_id' , params.post_id).fetch()
-                PostCategories = PostCategories.toJSON()
-                while(PostCategories[i]){
-                    var post_Category = await Post_Category.find(PostCategories[i].id)
-                    await post_Category.delete()
-                    i = i + 1
-                }
+            var PostCategories = await Post_Category.query().where('post_id', params.post_id).fetch()
+            PostCategories = PostCategories.toJSON()
+            while (PostCategories[i]) {
+                var post_Category = await Post_Category.find(PostCategories[i].id)
+                await post_Category.delete()
+                i = i + 1
+            }
             var post = await Post.find(params.post_id)
             await post.delete()
-            response.send({"message" : "Post deleted succesfully."})
+            response.send({ "message": "Post deleted succesfully." })
         } catch {
-            response.send({"message" : "Invalid Token!"})
+            response.send({ "message": "Invalid Token!" })
         }
     }
 
-    async show({params , response , auth}){
+    async show({ params, response, auth }) {
         try {
             await auth.check()
             var post = await Post.find(params.post_id)
             response.send(post.toJSON())
         } catch {
-            response.send({"message" : "Invalid Token!"})
+            response.send({ "message": "Invalid Token!" })
         }
     }
+
 }
 
 module.exports = PostController

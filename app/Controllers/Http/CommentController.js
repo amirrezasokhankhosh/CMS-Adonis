@@ -28,7 +28,7 @@ class CommentController {
         }
     }
 
-    async update({params , request , response , auth}){
+    async update({ params, request, response, auth }) {
         try {
             await auth.check()
             const validation = await validate(request.all(), {
@@ -48,25 +48,25 @@ class CommentController {
         }
     }
 
-    async delete({params , response , auth}){
+    async delete({ params, response, auth }) {
         try {
             await auth.check()
             var comment = await Comment.find(params.comment_id)
             await comment.delete()
-            response.send({"message" : "Comment deleted succesfully."})
+            response.send({ "message": "Comment deleted succesfully." })
         } catch {
             response.send({ "message": "Invalid token!" })
-        } 
+        }
     }
 
-    async show({params , response , auth}){
+    async show({ params, response, auth }) {
         try {
             await auth.check()
             var comment = await Comment.find(params.comment_id)
             response.send(comment.toJSON())
         } catch {
             response.send({ "message": "Invalid token!" })
-        } 
+        }
     }
 }
 
