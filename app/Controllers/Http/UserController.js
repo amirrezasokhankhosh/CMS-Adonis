@@ -31,15 +31,6 @@ class UserController {
         const token = await auth.attempt(email, password)
         return response.json(token)
     }
-
-    async check({ auth, response }) {
-        try {
-            await auth.check()
-            response.send("This user is allowd!")
-        } catch {
-            response.send("Invalid Token!")
-        }
-    }
 }
 
 module.exports = UserController
