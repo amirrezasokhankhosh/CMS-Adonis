@@ -3,6 +3,7 @@
 const { validate } = use('Validator')
 
 const User = use('App/Models/User')
+const Redis = use('Redis')
 
 class UserController {
 
@@ -30,6 +31,17 @@ class UserController {
         const { email, password } = request.all()
         const token = await auth.attempt(email, password)
         return response.json(token)
+    }
+
+    async all({ response }) {
+        const cachedUsers = await Redis.get('users')
+        if (cachedUsers) {
+            return response.send(cachedUsers.toJSON())
+        }
+
+        const users = await User.all()
+        await Redis.set('users', JSON.stringify(users))
+        return response.send(users.toJSON())
     }
 }
 

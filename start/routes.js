@@ -23,6 +23,7 @@ Route.get('/', () => {
 // Routes that are related to users 
 Route.post('/register', 'UserController.register')
 Route.post('/login', 'UserController.login')
+Route.get('/all_users' , 'UserController.all') // for testing redis.
 
 // Routes that are related to categories
 Route.post('/new_category', 'CategoryController.create').middleware(['auth'])
